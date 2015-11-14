@@ -1,25 +1,32 @@
 System.config({
   baseURL: "/",
   defaultJSExtensions: true,
-  transpiler: "babel",
-  babelOptions: {
-    "optional": [
-      "runtime",
-      "optimisation.modules.system"
-    ],
-    "stage": 1
+  transpiler: "typescript",
+  typescriptOptions: {
+    "module": "commonjs",
+    "emitDecoratorMetadata": true
   },
   paths: {
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
 
+  packages: {
+    "app": {
+      "defaultExtension": "ts"
+    }
+  },
+
   map: {
+    "@reactivex/rxjs": "npm:@reactivex/rxjs@5.0.0-alpha.10",
     "angular2": "npm:angular2@2.0.0-alpha.45",
     "babel": "npm:babel-core@5.8.33",
     "babel-runtime": "npm:babel-runtime@5.8.29",
+    "bootstrap": "npm:bootstrap@3.3.5",
     "core-js": "npm:core-js@1.2.6",
+    "lodash": "npm:lodash@3.10.1",
     "reflect-metadata": "npm:reflect-metadata@0.1.2",
+    "typescript": "npm:typescript@1.6.2",
     "zone.js": "npm:zone.js@0.5.8",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
@@ -54,6 +61,11 @@ System.config({
     "github:jspm/nodelibs-vm@0.1.0": {
       "vm-browserify": "npm:vm-browserify@0.0.4"
     },
+    "npm:@reactivex/rxjs@5.0.0-alpha.10": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+      "module": "github:jspm/nodelibs-module@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
     "npm:@reactivex/rxjs@5.0.0-alpha.4": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "path": "github:jspm/nodelibs-path@0.1.0",
@@ -81,6 +93,11 @@ System.config({
       "util": "npm:util@0.10.3"
     },
     "npm:babel-runtime@5.8.29": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:bootstrap@3.3.5": {
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:browserify-aes@1.0.5": {
@@ -221,6 +238,9 @@ System.config({
     },
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"
+    },
+    "npm:lodash@3.10.1": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:miller-rabin@4.0.0": {
       "bn.js": "npm:bn.js@4.1.1",
