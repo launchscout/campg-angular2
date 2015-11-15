@@ -2,6 +2,7 @@ import {bootstrap, Component, provide, View, FORM_DIRECTIVES, CORE_DIRECTIVES} f
 import CandidateService from "./candidate_service";
 import CandidateDetails from "./candidate_details";
 import {HTTP_BINDINGS} from 'angular2/http';
+import IdentityCache from "./identity_cache";
 
 import {
   RouteConfig,
@@ -34,4 +35,4 @@ class MyAppComponent {
 }
 
 reflector.reflectionCapabilities = new ReflectionCapabilities();
-bootstrap(MyAppComponent, [ROUTER_PROVIDERS, provide(LocationStrategy, {useClass: HashLocationStrategy}), CandidateService, HTTP_BINDINGS ]);
+bootstrap(MyAppComponent, [ROUTER_PROVIDERS, provide(LocationStrategy, {useClass: HashLocationStrategy}), CandidateService, IdentityCache, HTTP_BINDINGS ]);

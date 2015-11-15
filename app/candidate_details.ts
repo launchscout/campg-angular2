@@ -11,10 +11,10 @@ import { RouteParams } from 'angular2/router';
   template: `
   <dl *ng-if="candidate">
     <dd>Name</dd>
-    <dt>{{candidate.name}}</dt>
+    <dt><input [(ng-model)]="candidate.name" /></dt>
   </dl>
   `,
-  directives: [CORE_DIRECTIVES]
+  directives: [CORE_DIRECTIVES, FORM_DIRECTIVES]
 })
 class CandidateDetails {
   constructor(candidateService: CandidateService, routeParams: RouteParams) {
