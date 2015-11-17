@@ -1,4 +1,5 @@
 import { Injectable } from 'angular2';
+import _ from "lodash";
 
 @Injectable()
 class IdentityCache {
@@ -7,8 +8,9 @@ class IdentityCache {
     this.cache = {};
   }
 
-  loadFromCache(value) {
+  store(value) {
     if this.cache[value.id] {
+      _.merge(this.cache[value.id], value);
       return this.cache[value.id];
     } else {
       this.cache[value.id] = value;
@@ -16,13 +18,8 @@ class IdentityCache {
     }
   }
 
-  get(id) {
+  fetch(id) {
     return this.cache[id];
-  }
-
-  put(id, value) {
-    value.cachedAt = new Date();
-    this.cache[id] = value;
   }
 
 }
