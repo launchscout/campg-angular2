@@ -2,19 +2,23 @@ import {Component, provide, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angula
 import CandidateService from "./candidate_service";
 import _ from "lodash";
 
-import { RouteParams } from 'angular2/router';
+import { RouteParams, ROUTER_DIRECTIVES } from 'angular2/router';
 
 @Component({
     selector: 'candidate-details'
 })
 @View({
   template: `
-  <dl *ng-if="candidate">
+<div *ng-if="candidate">
+  <dl>
     <dd>Name</dd>
-    <dt><input [(ng-model)]="candidate.name" /></dt>
+    <dt>{{candidate.name}}</dt>
   </dl>
+  <input [(ng-model)]="candidate.name" />
+  <a [router-link]="['/EditCandidate', {'id':candidate.id}]">Edit</a>
+</div>
   `,
-  directives: [CORE_DIRECTIVES, FORM_DIRECTIVES]
+  directives: [CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES]
 })
 class CandidateDetails {
   constructor(candidateService: CandidateService, routeParams: RouteParams) {

@@ -11,21 +11,16 @@ import { ROUTER_DIRECTIVES, Router } from 'angular2/router';
   <ul>
     <li *ng-for="#candidate of candidates"><a [router-link]="['/CandidateDetails', {'id':candidate.id}]">{{candidate.name}}</a></li>
   </ul>
+  <a [router-link]="['/NewCandidate']">New Candidate</a>
   `,
   directives: [CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES]
 })
 class CandidatesComponent {
   constructor(candidateService: CandidateService, router: Router) {
     this.candidateService = candidateService;
-    this.router = router;
     this.candidateService.getCandidates().subscribe( (candidates) => {
       this.candidates = candidates;
     });
-    this.newCandidate = {};
-  }
-  addCandidate() {
-    this.candidates.push(this.newCandidate);
-    this.newCandidate = {};
   }
 }
 

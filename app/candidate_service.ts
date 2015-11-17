@@ -5,6 +5,8 @@ import IdentityCache from "./identity_cache";
 import DataMapping from "./data_mapping";
 import {reflector} from 'angular2/src/core/reflection/reflection';
 
+import {Headers} from 'angular2/http';
+
 @DataMapping({foo: "bar"})
 class Datum {
 
@@ -35,6 +37,18 @@ class CandidateService {
         return candidate.id == id;
       });
       .map( (candidate) => this.cache.store(candidate));
+  }
+
+  create(candidate) {
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post("http://localhost:8000/candidates", JSON.stringify(candidate), {headers: headers}).map( (res) => res.json());
+  }
+
+  update(candidate) {
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(`http://localhost:8000/candidates/${candidate.id}`, JSON.stringify(candidate), {headers: headers}).map( (res) => res.json());
   }
 
 }

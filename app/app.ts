@@ -1,6 +1,8 @@
 import {bootstrap, Component, provide, View, FORM_DIRECTIVES, CORE_DIRECTIVES} from 'angular2/angular2';
 import CandidateService from "./candidate_service";
 import CandidateDetails from "./candidate_details";
+import NewCandidate from "./new_candidate";
+import EditCandidate from "./edit_candidate";
 import {HTTP_BINDINGS} from 'angular2/http';
 import IdentityCache from "./identity_cache";
 
@@ -26,7 +28,9 @@ import CandidatesComponent from "./candidates_component";
   directives: [CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES, CandidatesComponent]
 })
 @RouteConfig([
-  new Route({path: '/candidates/:id', component: CandidateDetails, as: 'CandidateDetails'})
+  new Route({path: '/candidates/:id', component: CandidateDetails, as: 'CandidateDetails'}),
+  new Route({path: '/candidates/new', component: NewCandidate, as: 'NewCandidate'}),
+  new Route({path: '/candidates/:id/edit', component: EditCandidate, as: 'EditCandidate'}),
 ])
 class MyAppComponent {
     constructor() {
