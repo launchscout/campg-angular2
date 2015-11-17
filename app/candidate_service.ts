@@ -35,7 +35,7 @@ class CandidateService {
       .first((candidate) => {
         console.log(`I got called with: ${candidate}`);
         return candidate.id == id;
-      });
+      })
       .map( (candidate) => this.cache.store(candidate));
   }
 

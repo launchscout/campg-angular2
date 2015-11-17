@@ -14,7 +14,6 @@ import { RouteParams, ROUTER_DIRECTIVES } from 'angular2/router';
     <dd>Name</dd>
     <dt>{{candidate.name}}</dt>
   </dl>
-  <input [(ng-model)]="candidate.name" />
   <a [router-link]="['/EditCandidate', {'id':candidate.id}]">Edit</a>
 </div>
   `,
