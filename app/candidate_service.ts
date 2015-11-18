@@ -19,16 +19,31 @@ class CandidateService {
   constructor(http: Http, identityCache: IdentityCache) {
     this.http = http;
     this.cache = identityCache;
+    this.observers = [];
+    this.candidateList = [];
+    this.candidateObserverable = Rx.Observable.create( (observer) => {
+      this.observers.push(observer);
+    });
+
   }
 
   getCandidates() {
-    return this.http.get('http://localhost:8000/candidates')
+    this.fetchCandidates();
+    return this.candidateObserverable;
+  }
+
+  fetchCandidates() {
+    this.httpObservable = this.http.get('http://localhost:8000/candidates')
       .map(res => res.json())
       .map((candidates) => {
         return candidates.map((candidate) => this.cache.store(candidate));
+      })
+      .subscribe( (candidates) => {
+        this.candidateList = candidates;
+        this.notifyObservers();
       });
   }
-
+  
   getCandidate(id) {
     return this.http.get('http://localhost:8000/candidates')
       .concatMap(res => res.json())
@@ -39,9 +54,18 @@ class CandidateService {
       .map( (candidate) => this.cache.store(candidate));
   }
 
+  notifyObservers() {
+    
+    this.observers.forEach( (observer) => {
+      observer.next(this.candidateList);
+    });
+  }
+
   create(candidate) {
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
+    this.candidateList.push(candidate);
+    this.notifyObservers();
     return this.http.post("http://localhost:8000/candidates", JSON.stringify(candidate), {headers: headers}).map( (res) => res.json());
   }
 
