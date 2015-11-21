@@ -7,7 +7,9 @@ import {reflector} from 'angular2/src/core/reflection/reflection';
 // import socket from "./socket";
 import {Headers} from 'angular2/http';
 import {EventEmitter, Observable } from 'angular2';
-import {Socket} from "../phoenix/phoenix";
+import { Socket } from "phoenix_js";
+import PhoenixChannels from "./phoenix_channels";
+
 @DataMapping({foo: "bar"})
 class Datum {
 
@@ -17,84 +19,37 @@ annotations = reflector.annotations(Datum);
 
 @Injectable()
 class CandidateService {
-  constructor(http: Http, identityCache: IdentityCache) {
+  constructor(http: Http, phoenixChannels: PhoenixChannels) {
     this.http = http;
-    this.cache = identityCache;
-    this.observers = [];
-    this.candidateList = [];
-    this.candidatesEmitter = new EventEmitter();
-    // this.emitCandidates();
-    this.socket =  new Socket("ws://localhost:4000/socket");
-    this.socket.connect();
-
+    this.phoenixChannels = phoenixChannels;
+    this.allCandidatesChannel = this.phoenixChannels.channel("candidates:all");
+    this.allCandidatesChannel.join().subscribe();
   }
 
-  emitCandidates() {
-    this.candidateList.push({name: "Foo " + this.candidateList.length});
-    this.candidatesEmitter.next(this.candidateList);
-    setTimeout( () => {
-      this.emitCandidates();
-    }, 1000);
-  }
   getCandidates() {
-    this.channel = this.socket.channel("candidates:all", {});
-
-    this.channel.join()
-      .receive("ok", resp => {
-        console.log("connected", resp.candidates);
-        // setTimeout( () => {
-          this.candidatesEmitter.next(resp.candidates);
-        // }, 500);
-
-      })
-      .receive("error", resp => { console.log("Unable to join", resp) });
-
-    this.channel.on("change", (resp) => {
-      console.log("change", resp.candidates);
-      this.candidatesEmitter.next(resp.candidates);
-    });
-    // this.fetchCandidates();
-    return this.candidatesEmitter;
-  }
-
-
-
-  fetchCandidates() {
-    this.httpObservable = this.http.get('http://localhost:4000/candidates')
-      .map(res => res.json())
-      .map((candidates) => {
-        return candidates.map((candidate) => this.cache.store(candidate));
-      })
-      .subscribe( (candidates) => {
-        this.candidatesEmitter.next(candidates);
-      });
+    let httpObservable = this.http.get('http://localhost:4000/candidates').map( (resp) => resp.json());
+    let phoenixObservable = this.allCandidatesChannel.observeMessage("change").map( (resp) => resp.candidates );
+    return Observable.merge(httpObservable, phoenixObservable);
   }
 
   getCandidate(id) {
-    return this.http.get(`http://localhost:4000/candidates/${id}`)
-      .map(res => res.json())
-      .map( (candidate) => this.cache.store(candidate));
-  }
-
-  notifyObservers() {
-
-    this.observers.forEach( (observer) => {
-      observer.next(this.candidateList);
-    });
+    let candidateChannel = this.phoenixChannels.channel(`candidates:${id}`);
+    candidateChannel.join().subscribe();
+    let httpObservable = this.http.get(`http://localhost:4000/candidates/${id}`).map( (resp) => resp.json());
+    let phoenixObservable = candidateChannel.observeMessage("change").map( (resp) => resp.candidate );
+    return Observable.merge(httpObservable, phoenixObservable);
   }
 
   create(candidate) {
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    this.candidateList.push(candidate);
-    this.notifyObservers();
     return this.http.post("http://localhost:4000/candidates", JSON.stringify({candidate: candidate}), {headers: headers}).map( (res) => res.json());
   }
 
   update(candidate) {
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post(`http://localhost:4000/candidates/${candidate.id}`, JSON.stringify({candidate: candidate}), {headers: headers}).map( (res) => res.json());
+    return this.http.put(`http://localhost:4000/candidates/${candidate.id}`, JSON.stringify({candidate: candidate}), {headers: headers}).map( (res) => res.json());
   }
 
 }

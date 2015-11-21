@@ -28,6 +28,7 @@ System.config({
     "bootstrap": "npm:bootstrap@3.3.5",
     "core-js": "npm:core-js@1.2.6",
     "lodash": "npm:lodash@3.10.1",
+    "phoenix_js": "npm:phoenix_js@0.0.2",
     "reflect-metadata": "npm:reflect-metadata@0.1.2",
     "typescript": "npm:typescript@1.6.2",
     "zone.js": "npm:zone.js@0.5.8",
@@ -267,6 +268,9 @@ System.config({
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2",
       "systemjs-json": "github:systemjs/plugin-json@0.1.0"
+    },
+    "npm:phoenix_js@0.0.2": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:process@0.11.2": {
       "assert": "github:jspm/nodelibs-assert@0.1.0"

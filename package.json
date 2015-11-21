@@ -6,6 +6,7 @@
       "angular2": "npm:angular2@^2.0.0-alpha.46",
       "bootstrap": "npm:bootstrap@^3.3.5",
       "lodash": "npm:lodash@^3.10.1",
+      "phoenix_js": "npm:phoenix_js@^0.0.2",
       "reflect-metadata": "npm:reflect-metadata@^0.1.2",
       "typescript": "npm:typescript@^1.6.2",
       "zone.js": "npm:zone.js@^0.5.8"
