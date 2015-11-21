@@ -28,9 +28,9 @@ import CandidatesComponent from "./candidates_component";
   directives: [CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES, CandidatesComponent]
 })
 @RouteConfig([
-  new Route({path: '/candidates/:id', component: CandidateDetails, as: 'CandidateDetails'}),
-  new Route({path: '/candidates/new', component: NewCandidate, as: 'NewCandidate'}),
-  new Route({path: '/candidates/:id/edit', component: EditCandidate, as: 'EditCandidate'}),
+  new Route({path: '/candidates/:id', component: CandidateDetails, name: 'CandidateDetails'}),
+  new Route({path: '/candidates/new', component: NewCandidate, name: 'NewCandidate'}),
+  new Route({path: '/candidates/:id/edit', component: EditCandidate, name: 'EditCandidate'}),
 ])
 class MyAppComponent {
     constructor() {

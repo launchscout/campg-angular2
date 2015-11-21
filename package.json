@@ -3,7 +3,7 @@
     "directories": {},
     "dependencies": {
       "@reactivex/rxjs": "npm:@reactivex/rxjs@^5.0.0-alpha.10",
-      "angular2": "npm:angular2@^2.0.0-alpha.45",
+      "angular2": "npm:angular2@^2.0.0-alpha.46",
       "bootstrap": "npm:bootstrap@^3.3.5",
       "lodash": "npm:lodash@^3.10.1",
       "reflect-metadata": "npm:reflect-metadata@^0.1.2",

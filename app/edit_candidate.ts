@@ -7,9 +7,11 @@ import { Router, RouteParams } from 'angular2/router';
 })
 @View({
   template: `
+<div *ng-if="candidate">
   <label>Name</label>
   <input [(ng-model)]="candidate.name" />
   <button (click)="save()">Save Candidate</button>
+</div>
   `,
   directives: [CORE_DIRECTIVES, FORM_DIRECTIVES]
 })

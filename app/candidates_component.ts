@@ -9,7 +9,7 @@ import { ROUTER_DIRECTIVES, Router } from 'angular2/router';
 @View({
   template: `
   <ul>
-    <li *ng-for="#candidate of candidates"><a [router-link]="['/CandidateDetails', {'id':candidate.id}]">{{candidate.name}}</a></li>
+    <li *ng-for="#candidate of (candidates | async)"><a [router-link]="['/CandidateDetails', {'id':candidate.id}]">{{candidate.name}}</a></li>
   </ul>
   <a [router-link]="['/NewCandidate']">New Candidate</a>
   `,
@@ -18,9 +18,10 @@ import { ROUTER_DIRECTIVES, Router } from 'angular2/router';
 class CandidatesComponent {
   constructor(candidateService: CandidateService, router: Router) {
     this.candidateService = candidateService;
-    this.candidateService.getCandidates().subscribe( (candidates) => {
-      this.candidates = candidates;
-    });
+    this.candidates = this.candidateService.getCandidates();
+    // .subscribe( (candidates) => {
+    //   console.log("got candidates in component", candidates);
+    // });
   }
 }
 
