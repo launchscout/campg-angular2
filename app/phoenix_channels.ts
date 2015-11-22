@@ -32,11 +32,10 @@ class PhoenixChannel {
   }
 }
 
-@Injectable()
 class PhoenixChannels {
 
-  constructor() {
-    this.socket =  new Socket("ws://localhost:4000/socket");
+  constructor(socketUrl) {
+    this.socket =  new Socket(socketUrl);
     this.socket.connect();
   }
 

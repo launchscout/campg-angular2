@@ -5,7 +5,7 @@ import NewCandidate from "./new_candidate";
 import EditCandidate from "./edit_candidate";
 import {HTTP_BINDINGS} from 'angular2/http';
 import IdentityCache from "./identity_cache";
-import PhoenixChannels from "./phoenix_channels";
+import PhoenixChannels from "angular2-phoenix-channels";
 
 import {
   RouteConfig,
@@ -39,5 +39,8 @@ class MyAppComponent {
     }
 }
 
+let phoenixChannelsProvider = provide(PhoenixChannels, { useFactory: () => {
+  return new PhoenixChannels("ws://localhost:4000/socket");
+} });
 reflector.reflectionCapabilities = new ReflectionCapabilities();
-bootstrap(MyAppComponent, [ROUTER_PROVIDERS, provide(LocationStrategy, {useClass: HashLocationStrategy}), CandidateService, IdentityCache, PhoenixChannels, HTTP_BINDINGS ]);
+bootstrap(MyAppComponent, [ROUTER_PROVIDERS, provide(LocationStrategy, {useClass: HashLocationStrategy}), CandidateService, IdentityCache, phoenixChannelsProvider, HTTP_BINDINGS ]);

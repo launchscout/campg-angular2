@@ -23,6 +23,7 @@ System.config({
   map: {
     "@reactivex/rxjs": "npm:@reactivex/rxjs@5.0.0-alpha.10",
     "angular2": "npm:angular2@2.0.0-alpha.46",
+    "angular2-phoenix-channels": "npm:angular2-phoenix-channels@0.0.1",
     "babel": "npm:babel-core@5.8.34",
     "babel-runtime": "npm:babel-runtime@5.8.34",
     "bootstrap": "npm:bootstrap@3.3.5",
@@ -74,6 +75,10 @@ System.config({
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:angular2-phoenix-channels@0.0.1": {
+      "angular2": "npm:angular2@2.0.0-alpha.46",
+      "phoenix_js": "npm:phoenix_js@0.0.2"
     },
     "npm:angular2@2.0.0-alpha.46": {
       "@reactivex/rxjs": "npm:@reactivex/rxjs@5.0.0-alpha.7",

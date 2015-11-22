@@ -8,7 +8,7 @@ import {reflector} from 'angular2/src/core/reflection/reflection';
 import {Headers} from 'angular2/http';
 import {EventEmitter, Observable } from 'angular2';
 import { Socket } from "phoenix_js";
-import PhoenixChannels from "./phoenix_channels";
+import PhoenixChannels from "angular2-phoenix-channels";
 
 @DataMapping({foo: "bar"})
 class Datum {
@@ -23,7 +23,7 @@ class CandidateService {
     this.http = http;
     this.phoenixChannels = phoenixChannels;
     this.allCandidatesChannel = this.phoenixChannels.channel("candidates:all");
-    this.allCandidatesChannel.join().subscribe();
+    this.allCandidatesChannel.join();
   }
 
   getCandidates() {
